@@ -6,7 +6,7 @@
   		exit();
 	}
 
-	$sql = "select id, variant, shopify_customer_id from Entries";
+	$sql = "select id, variant, shopify_customer_id from Entries order by id desc limit 1";
 
 	$stmt = $connection->prepare($sql);
 	$stmt->execute();
