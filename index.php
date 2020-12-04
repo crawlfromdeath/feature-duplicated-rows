@@ -7,7 +7,7 @@
 	}
 
 	$sql = "select product, variant, shopify_customer_id, count(*) as NumDuplicates
-			from table
+			from Entries
 			group by product, variant, shopify_customer_id
 			having NumDuplicates > 1";
 
