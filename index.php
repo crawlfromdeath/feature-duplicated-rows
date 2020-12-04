@@ -6,14 +6,17 @@
   		exit();
 	}
 
-	$sql = "DELETE a
-		  FROM Entries a
-		  JOIN (SELECT MAX(t.id) AS max_a1, t.variant, t.shopify_customer_id
-			  FROM Entries t
-		      GROUP BY t.variant, t.shopify_customer_id
-			HAVING COUNT(*) > 1) b ON b.shopify_customer_id = a.shopify_customer_id
-					      AND b.variant = a.variant
-					      AND b.max_a1 != a.id";
+	$sql = "select id, variant, shopify_customer_id Entries";
 
 	$stmt = $connection->prepare($sql);
 	$stmt->execute();
+
+	$data = $stmt->get_result();
+
+	$arr = array();
+
+	while ($row = mysqli_fetch_array($data)) {
+		$arr[$row['variant'] . '_' . $row['shopify_customer']][] = $row['id'];
+	}
+
+	print_r($arr);
