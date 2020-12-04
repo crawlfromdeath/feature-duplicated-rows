@@ -1,16 +1,7 @@
 <?php
-require __DIR__ . '/vendor/autoload.php';
+	$mysqli = new mysqli("db-mysql-sfo3-52037-do-user-4596315-0.b.db.ondigitalocean.com","doadmin","qmdvp61fnm8azm2u","defaultdb", "25060");
 
-use Cowsayphp\Farm;
-
-header('Content-Type: text/plain');
-
-$text = "Set a message by adding ?message=<message here> to the URL";
-if(isset($_GET['message']) && $_GET['message'] != '') {
-	$text = htmlspecialchars($_GET['message']);
-}
-
-echo "Test";
-
-$cow = Farm::create(\Cowsayphp\Farm\Cow::class);
-echo $cow->say($text);
+	if ($mysqli->connect_errno) {
+  		echo "Failed to connect to MySQL: " . $mysqli->connect_error;
+  		exit();
+	}
