@@ -6,7 +6,7 @@
   		exit();
 	}
 
-	$sql = "select id, variant, shopify_customer_id Entries";
+	$sql = "select id, variant, shopify_customer_id from Entries";
 
 	$stmt = $connection->prepare($sql);
 	$stmt->execute();
