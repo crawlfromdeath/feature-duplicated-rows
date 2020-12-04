@@ -6,16 +6,14 @@
   		exit();
 	}
 
-	$sql = "select product, variant, shopify_customer_id, count(*) as NumDuplicates
-			from Entries
-			group by product, variant, shopify_customer_id
-			having NumDuplicates > 1";
+	$sql = "DELETE a
+		  FROM Entries a
+		  JOIN (SELECT MAX(t.id) AS max_a1, t.variant, t.shopify_customer_id
+			  FROM Entries t
+		      GROUP BY t.variant, t.shopify_customer_id
+			HAVING COUNT(*) > 1) b ON b.shopify_customer_id = a.shopify_customer_id
+					      AND b.variant = a.variant
+					      AND b.max_a1 != a.id";
 
 	$stmt = $connection->prepare($sql);
 	$stmt->execute();
-
-	$data = $stmt->get_result();
-
-	while ($row = mysqli_fetch_array($data)) {
-		print_r($row);
-	}
