@@ -21,12 +21,18 @@
 			$stmt->execute();
 			
 			header('Content-Type: application/json');
-
+			header('Access-Control-Allow-Origin: https://releases.feature.com');
+			header('Access-Control-Allow-Methods: GET');
+			header("Access-Control-Allow-Headers: X-Requested-With");
+			
 			$arr = array('status' => 200, 'message' => 'Done');
 			echo json_encode($arr);
 		}
 		else {
 			header('Content-Type: application/json');
+			header('Access-Control-Allow-Origin: https://releases.feature.com');
+			header('Access-Control-Allow-Methods: GET');
+			header("Access-Control-Allow-Headers: X-Requested-With");
 
 			$arr = array('status' => 503, 'message' => 'Denied');
 			echo json_encode($arr);
@@ -75,6 +81,9 @@
 				$stmt->execute();
 
 				header('Content-Type: application/json');
+				header('Access-Control-Allow-Origin: https://releases.feature.com');
+				header('Access-Control-Allow-Methods: GET');
+				header("Access-Control-Allow-Headers: X-Requested-With");
 
 				$arr = array('status' => 200, 'message' => 'Done');
 				echo json_encode($arr);
