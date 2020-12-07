@@ -7,9 +7,9 @@
 	  		exit();
 		}
 		
-		$offset = 50000 * $_GET['page'];
+		$offset = 30000 * $_GET['page'];
 
-		$sql = "select id, variant, shopify_customer_id from Entries order by id desc limit 50000 offset " . $offset;
+		$sql = "select id, variant, shopify_customer_id from Entries order by id desc limit 30000 offset " . $offset;
 
 		$stmt = $connection->prepare($sql);
 		$stmt->execute();
@@ -46,26 +46,50 @@
 		}
 	}
 	else {
-		
-		$connection = mysqli_connect("db-mysql-sfo3-52037-do-user-4596315-0.b.db.ondigitalocean.com","doadmin","qmdvp61fnm8azm2u","defaultdb", "25060");
+		if ($_GET['view'] == 'all') {
+			$connection = mysqli_connect("db-mysql-sfo3-52037-do-user-4596315-0.b.db.ondigitalocean.com","doadmin","qmdvp61fnm8azm2u","defaultdb", "25060");
 
-		if (mysqli_connect_errno()) {
-	  		echo "Failed to connect to MySQL: " . mysqli_connect_error();
-	  		exit();
+			if (mysqli_connect_errno()) {
+		  		echo "Failed to connect to MySQL: " . mysqli_connect_error();
+		  		exit();
+			}
+
+			$sql = "SELECT id, variant, shopify_customer_id FROM Entries order by id desc";
+
+			$stmt = $connection->prepare($sql);
+			$stmt->execute();
+
+			$data = $stmt->get_result();
+
+			$arr = array();
+
+			while ($row = mysqli_fetch_array($data)) {
+				echo $row['variant'] . '_' . $row['shopify_customer_id'] . '_' . $row['id'] . "\n";
+			}
+
+			print_r($arr);
 		}
+		if ($_GET['view'] == 'group') {
+			$connection = mysqli_connect("db-mysql-sfo3-52037-do-user-4596315-0.b.db.ondigitalocean.com","doadmin","qmdvp61fnm8azm2u","defaultdb", "25060");
 
-		$sql = "SELECT id, variant, shopify_customer_id FROM Entries order by id desc";
+			if (mysqli_connect_errno()) {
+		  		echo "Failed to connect to MySQL: " . mysqli_connect_error();
+		  		exit();
+			}
 
-		$stmt = $connection->prepare($sql);
-		$stmt->execute();
+			$sql = "SELECT id, variant, shopify_customer_id FROM Entries group by variant, shopify_customer_id having count(*) >1";
 
-		$data = $stmt->get_result();
+			$stmt = $connection->prepare($sql);
+			$stmt->execute();
 
-		$arr = array();
+			$data = $stmt->get_result();
 
-		while ($row = mysqli_fetch_array($data)) {
-			echo $row['variant'] . '_' . $row['shopify_customer_id'] . '_' . $row['id'] . "\n";
+			$arr = array();
+
+			while ($row = mysqli_fetch_array($data)) {
+				echo $row['variant'] . '_' . $row['shopify_customer_id'] . '_' . $row['id'] . "\n";
+			}
+
+			print_r($arr);
 		}
-
-		print_r($arr);
 	}
