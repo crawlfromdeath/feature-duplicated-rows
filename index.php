@@ -54,7 +54,7 @@
 	  		exit();
 		}
 
-		$sql = "SELECT MAX(id) as id, variant, shopify_customer_id, COUNT(*) FROM Entries order by id desc GROUP BY variant, shopify_customer_id HAVING COUNT(*) > 1";
+		$sql = "SELECT MAX(id) as id, variant, shopify_customer_id, COUNT(*) FROM Entries GROUP BY variant, shopify_customer_id HAVING COUNT(*) > 1";
 
 		$stmt = $connection->prepare($sql);
 		$stmt->execute();
