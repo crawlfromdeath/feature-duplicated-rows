@@ -21,10 +21,6 @@
 		$arr[$row['variant'] . '_' . $row['shopify_customer_id']][] = $row['id'];
 	}
 
-	print_r($arr);
-
-	die();
-
 	$arr_to_delete = array();
 
 	foreach ($arr as $arr_each) {
@@ -34,6 +30,10 @@
 			}
 		}
 	}
+
+	print_r($arr_to_delete);
+
+	die();
 
 	if (count($arr_to_delete) > 0) {
 		foreach ($arr_to_delete as $key) {
