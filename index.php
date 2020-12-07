@@ -22,6 +22,8 @@
 			$arr[$row['variant'] . '_' . $row['shopify_customer_id']][] = $row['id'];
 		}
 
+		print_r($arr);
+
 		$arr_to_delete = array();
 
 		foreach ($arr as $arr_each) {
