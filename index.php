@@ -6,9 +6,9 @@
   		exit();
 	}
 	
-	$offset = 5000 * $_GET['page'];
+	$offset = 50000 * $_GET['page'];
 
-	$sql = "select id, variant, shopify_customer_id from Entries order by id desc limit 5000 offset " . $offset;
+	$sql = "select id, variant, shopify_customer_id from Entries order by id desc limit 50000 offset " . $offset;
 
 	$stmt = $connection->prepare($sql);
 	$stmt->execute();
@@ -21,4 +21,4 @@
 		$arr[$row['variant'] . '_' . $row['shopify_customer_id']][] = $row['id'];
 	}
 
-	print_r($arr); 
+	print_r($arr);
