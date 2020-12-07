@@ -63,6 +63,8 @@
 		while ($row = mysqli_fetch_array($data)) {
 			$arr[$row['variant'] . '_' . $row['shopify_customer_id']][] = $row['id'];
 		}
+		
+		print_r($arr);
 
 		$arr_to_delete = array();
 
