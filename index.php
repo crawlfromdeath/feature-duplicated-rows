@@ -21,6 +21,10 @@
 
 			$stmt = $connection->prepare($sql);
 			$stmt->execute();
+			
+			$arr = array('status' => 'success');
+			header('Content-Type: application/json');
+			echo json_encode($arr);
 		}
 		else {
 			header('HTTP/1.1 503 Service Temporarily Unavailable');
