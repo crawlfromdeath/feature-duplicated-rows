@@ -26,7 +26,9 @@
 	foreach ($arr as $arr_each) {
 		if (count($arr_each) > 1) {
 			for ($i = 1; $i <= count($arr_each) - 1; $i++) {
-				$arr_to_delete[$arr_each[$i]];
+				$arr_to_delete[] = $arr_each[$i];
 			}
 		}
 	}
+
+	print_r($arr_to_delete);
