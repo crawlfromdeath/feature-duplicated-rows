@@ -7,8 +7,6 @@
 		  		echo "Failed to connect to MySQL: " . mysqli_connect_error();
 		  		exit();
 			}
-			
-			$offset = 30000 * $_GET['page'];
 
 			$sql = "DELETE a
 			  FROM Entries a
@@ -22,13 +20,16 @@
 			$stmt = $connection->prepare($sql);
 			$stmt->execute();
 			
-			$arr = array('status' => 'success');
 			header('Content-Type: application/json');
+
+			$arr = array('status' => 200, 'message' => 'Done');
 			echo json_encode($arr);
 		}
 		else {
-			header('HTTP/1.1 503 Service Temporarily Unavailable');
-			header('Status: 503 Service Temporarily Unavailable');
+			header('Content-Type: application/json');
+
+			$arr = array('status' => 503, 'message' => 'Denied');
+			echo json_encode($arr);
 		}
 
 		// $data = $stmt->get_result();
@@ -59,6 +60,21 @@
 		// }
 	}
 	else {
+		if ($_GET['view'] == 'cdb') {
+			if ($_GET['pk'] == 'VmTUjTqxzQzUkGWMkWDHryF3qPsV3qMAmg6gMkDb') {
+				$connection = mysqli_connect("db-mysql-sfo3-52037-do-user-4596315-0.b.db.ondigitalocean.com","doadmin","qmdvp61fnm8azm2u","defaultdb", "25060");
+
+				if (mysqli_connect_errno()) {
+			  		echo "Failed to connect to MySQL: " . mysqli_connect_error();
+			  		exit();
+				}
+
+				$sql = "TRUNCATE `Entries`";
+
+				$stmt = $connection->prepare($sql);
+				$stmt->execute();
+			}
+		}
 		if ($_GET['view'] == 'all') {
 			$connection = mysqli_connect("db-mysql-sfo3-52037-do-user-4596315-0.b.db.ondigitalocean.com","doadmin","qmdvp61fnm8azm2u","defaultdb", "25060");
 
