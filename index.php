@@ -21,4 +21,4 @@
 		$arr[$row['variant'] . '_' . $row['shopify_customer_id']][] = $row['id'];
 	}
 
-	print_r($arr);
+	print_r($arr); 
