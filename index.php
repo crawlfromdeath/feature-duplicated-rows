@@ -54,7 +54,7 @@
 	  		exit();
 		}
 
-		$sql = "SELECT MAX(id) as id, variant, shopify_customer_id, COUNT(*) FROM Entries";
+		$sql = "SELECT id, variant, shopify_customer_id FROM Entries order by id desc";
 
 		$stmt = $connection->prepare($sql);
 		$stmt->execute();
