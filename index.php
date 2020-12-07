@@ -50,10 +50,8 @@
 	  		echo "Failed to connect to MySQL: " . mysqli_connect_error();
 	  		exit();
 		}
-		
-		$offset = 20000 * $_GET['page'];
 
-		$sql = "select id, variant, shopify_customer_id from Entries order by id desc";
+		$sql = "SELECT MAX(id) as id, variant, shopify_customer_id, COUNT(*) FROM Entries GROUP BY variant, shopify_customer_id HAVING COUNT(*) > 1";
 
 		$stmt = $connection->prepare($sql);
 		$stmt->execute();
@@ -66,15 +64,5 @@
 			$arr[$row['variant'] . '_' . $row['shopify_customer_id']][] = $row['id'];
 		}
 
-		$arr_to_delete = array();
-
-		foreach ($arr as $arr_each) {
-			if (count($arr_each) > 1) {
-				for ($i = 1; $i <= count($arr_each) - 1; $i++) {
-					$arr_to_delete[] = $arr_each[$i];
-				}
-			}
-		}
-
-		print_r($arr_to_delete);
+		print_r($arr);
 	}
