@@ -34,7 +34,7 @@
 	}
 
 	if (count($arr_to_delete) > 0) {
-		foreach ($arr_to_deleter as $key) {
+		foreach ($arr_to_delete as $key) {
 			$sql = "DELETE from Entries where id = '" . $key . "'";
 
 			$stmt = $connection->prepare($sql);
