@@ -51,7 +51,7 @@
 		
 		$offset = 20000 * $_GET['page'];
 
-		$sql = "select id, variant, shopify_customer_id from Entries order by id desc limit -1";
+		$sql = "select id, variant, shopify_customer_id from Entries order by id desc";
 
 		$stmt = $connection->prepare($sql);
 		$stmt->execute();
