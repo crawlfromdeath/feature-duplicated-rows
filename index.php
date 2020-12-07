@@ -9,12 +9,21 @@
 		
 		$offset = 30000 * $_GET['page'];
 
-		$sql = "SELECT MAX(id) as id, variant, shopify_customer_id, COUNT(*) FROM Entries GROUP BY variant, shopify_customer_id HAVING COUNT(*) > 1";
+		$sql = "DELETE a
+		  FROM Entries a
+		  JOIN (SELECT MAX(t.id) AS max_a1, t.variant, t.shopify_customer_id
+			  FROM Entries t
+		      GROUP BY t.variant, t.shopify_customer_id
+			HAVING COUNT(*) > 1) b ON b.shopify_customer_id = a.shopify_customer_id
+					      AND b.variant = a.variant
+					      AND b.max_a1 != a.id";
 
 		$stmt = $connection->prepare($sql);
 		$stmt->execute();
 
 		$data = $stmt->get_result();
+
+		die();
 
 		$arr = array();
 
