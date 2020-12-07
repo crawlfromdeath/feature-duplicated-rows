@@ -46,6 +46,7 @@
 		}
 	}
 	else {
+		
 		$connection = mysqli_connect("db-mysql-sfo3-52037-do-user-4596315-0.b.db.ondigitalocean.com","doadmin","qmdvp61fnm8azm2u","defaultdb", "25060");
 
 		if (mysqli_connect_errno()) {
@@ -53,7 +54,7 @@
 	  		exit();
 		}
 
-		$sql = "SELECT MAX(id) as id, variant, shopify_customer_id, COUNT(*) FROM Entries GROUP BY variant, shopify_customer_id HAVING COUNT(*) > 1";
+		$sql = "SELECT MAX(id) as id, variant, shopify_customer_id, COUNT(*) FROM Entries order by id desc GROUP BY variant, shopify_customer_id HAVING COUNT(*) > 1";
 
 		$stmt = $connection->prepare($sql);
 		$stmt->execute();
@@ -63,7 +64,7 @@
 		$arr = array();
 
 		while ($row = mysqli_fetch_array($data)) {
-			$arr[$row['variant'] . '_' . $row['shopify_customer_id']][] = $row['id'];
+			echo $row['variant'] . '_' . $row['shopify_customer_id'] . '_' . $row['id'] . "\n";
 		}
 
 		print_r($arr);
