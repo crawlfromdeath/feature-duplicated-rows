@@ -73,6 +73,11 @@
 
 				$stmt = $connection->prepare($sql);
 				$stmt->execute();
+
+				header('Content-Type: application/json');
+
+				$arr = array('status' => 200, 'message' => 'Done');
+				echo json_encode($arr);
 			}
 		}
 		if ($_GET['view'] == 'all') {
