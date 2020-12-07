@@ -23,6 +23,8 @@
 
 	print_r($arr);
 
+	die();
+
 	$arr_to_delete = array();
 
 	foreach ($arr as $arr_each) {
