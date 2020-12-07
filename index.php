@@ -31,4 +31,11 @@
 		}
 	}
 
-	print_r($arr_to_delete);
+	if (count($arr_to_delete) > 0) {
+		foreach ($arr_to_deleter as $key) {
+			$sql = "DELETE from where id = '" . $key . "'";
+
+			$stmt = $connection->prepare($sql);
+			$stmt->execute();
+		}
+	}
