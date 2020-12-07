@@ -7,8 +7,10 @@
   		echo "Failed to connect to MySQL: " . mysqli_connect_error();
   		exit();
 	}
+	
+	$offset = 5000 * $_GET['page'];
 
-	$sql = "select id, variant, shopify_customer_id from Entries order by id desc limit 1";
+	$sql = "select id, variant, shopify_customer_id from Entries order by id desc limit 5000 offset " . $offset;
 
 	$stmt = $connection->prepare($sql);
 	$stmt->execute();
