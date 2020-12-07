@@ -51,7 +51,7 @@
 		
 		$offset = 20000 * $_GET['page'];
 
-		$sql = "select id, variant, shopify_customer_id from Entries order by id desc limit 20000 offset " . $offset;
+		$sql = "select id, variant, shopify_customer_id from Entries order by id desc limit -1";
 
 		$stmt = $connection->prepare($sql);
 		$stmt->execute();
@@ -63,8 +63,6 @@
 		while ($row = mysqli_fetch_array($data)) {
 			$arr[$row['variant'] . '_' . $row['shopify_customer_id']][] = $row['id'];
 		}
-		
-		print_r($arr);
 
 		$arr_to_delete = array();
 
