@@ -1,6 +1,4 @@
 <?php
-	die();
-
 	$connection = mysqli_connect("db-mysql-sfo3-52037-do-user-4596315-0.b.db.ondigitalocean.com","doadmin","qmdvp61fnm8azm2u","defaultdb", "25060");
 
 	if (mysqli_connect_errno()) {
@@ -20,7 +18,7 @@
 	$arr = array();
 
 	while ($row = mysqli_fetch_array($data)) {
-		$arr[$row['variant'] . '_' . $row['shopify_customer']][] = $row['id'];
+		$arr[$row['variant'] . '_' . $row['shopify_customer_id']][] = $row['id'];
 	}
 
 	print_r($arr);
