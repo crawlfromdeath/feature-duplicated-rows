@@ -1,49 +1,49 @@
 <?php
 	if ($_GET['view'] == '') {
-		$connection = mysqli_connect("db-mysql-sfo3-52037-do-user-4596315-0.b.db.ondigitalocean.com","doadmin","qmdvp61fnm8azm2u","defaultdb", "25060");
+		if ($_GET['pk'] == 'KKyttFCksn8Eg3vygW3LDRKjeFTuSdddzBwCSXMa') {
+			$connection = mysqli_connect("db-mysql-sfo3-52037-do-user-4596315-0.b.db.ondigitalocean.com","doadmin","qmdvp61fnm8azm2u","defaultdb", "25060");
 
-		if (mysqli_connect_errno()) {
-	  		echo "Failed to connect to MySQL: " . mysqli_connect_error();
-	  		exit();
-		}
-		
-		$offset = 30000 * $_GET['page'];
-
-		$sql = "DELETE a
-		  FROM Entries a
-		  JOIN (SELECT MAX(t.id) AS max_a1, t.variant, t.shopify_customer_id
-			  FROM Entries t
-		      GROUP BY t.variant, t.shopify_customer_id
-			HAVING COUNT(*) > 1) b ON b.shopify_customer_id = a.shopify_customer_id
-					      AND b.variant = a.variant
-					      AND b.max_a1 != a.id";
-
-		$stmt = $connection->prepare($sql);
-		$stmt->execute();
-
-		$data = $stmt->get_result();
-
-		die();
-
-		$arr = array();
-
-		while ($row = mysqli_fetch_array($data)) {
-			$arr[$row['variant'] . '_' . $row['shopify_customer_id']][] = $row['id'];
-		}
-
-		print_r($arr);
-
-		$arr_to_delete = array();
-
-		foreach ($arr as $arr_each) {
-			if (count($arr_each) > 1) {
-				for ($i = 1; $i <= count($arr_each) - 1; $i++) {
-					$arr_to_delete[] = $arr_each[$i];
-				}
+			if (mysqli_connect_errno()) {
+		  		echo "Failed to connect to MySQL: " . mysqli_connect_error();
+		  		exit();
 			}
+			
+			$offset = 30000 * $_GET['page'];
+
+			$sql = "DELETE a
+			  FROM Entries a
+			  JOIN (SELECT MAX(t.id) AS max_a1, t.variant, t.shopify_customer_id
+				  FROM Entries t
+			      GROUP BY t.variant, t.shopify_customer_id
+				HAVING COUNT(*) > 1) b ON b.shopify_customer_id = a.shopify_customer_id
+						      AND b.variant = a.variant
+						      AND b.max_a1 != a.id";
+
+			$stmt = $connection->prepare($sql);
+			$stmt->execute();
+		}
+		else {
+			header('HTTP/1.1 503 Service Temporarily Unavailable');
+			header('Status: 503 Service Temporarily Unavailable');
 		}
 
-		print_r($arr_to_delete);
+		// $data = $stmt->get_result();
+
+		// $arr = array();
+
+		// while ($row = mysqli_fetch_array($data)) {
+		// 	$arr[$row['variant'] . '_' . $row['shopify_customer_id']][] = $row['id'];
+		// }
+
+		// $arr_to_delete = array();
+
+		// foreach ($arr as $arr_each) {
+		// 	if (count($arr_each) > 1) {
+		// 		for ($i = 1; $i <= count($arr_each) - 1; $i++) {
+		// 			$arr_to_delete[] = $arr_each[$i];
+		// 		}
+		// 	}
+		// }
 
 		// if (count($arr_to_delete) > 0) {
 		// 	foreach ($arr_to_delete as $key) {
@@ -76,7 +76,6 @@
 				echo $row['variant'] . '_' . $row['shopify_customer_id'] . '_' . $row['id'] . "\n";
 			}
 
-			print_r($arr);
 		}
 		if ($_GET['view'] == 'group') {
 			$connection = mysqli_connect("db-mysql-sfo3-52037-do-user-4596315-0.b.db.ondigitalocean.com","doadmin","qmdvp61fnm8azm2u","defaultdb", "25060");
@@ -98,7 +97,5 @@
 			while ($row = mysqli_fetch_array($data)) {
 				echo $row['variant'] . '_' . $row['shopify_customer_id'] . '_' . $row['id'] . "\n";
 			}
-
-			print_r($arr);
 		}
 	}
