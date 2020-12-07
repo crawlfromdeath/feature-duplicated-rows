@@ -9,7 +9,7 @@
 		
 		$offset = 30000 * $_GET['page'];
 
-		$sql = "select id, variant, shopify_customer_id from Entries order by id desc limit 30000 offset " . $offset;
+		$sql = "SELECT MAX(id) as id, variant, shopify_customer_id, COUNT(*) FROM Entries GROUP BY variant, shopify_customer_id HAVING COUNT(*) > 1";
 
 		$stmt = $connection->prepare($sql);
 		$stmt->execute();
@@ -36,14 +36,14 @@
 
 		print_r($arr_to_delete);
 
-		if (count($arr_to_delete) > 0) {
-			foreach ($arr_to_delete as $key) {
-				$sql = "DELETE from Entries where id = '" . $key . "'";
+		// if (count($arr_to_delete) > 0) {
+		// 	foreach ($arr_to_delete as $key) {
+		// 		$sql = "DELETE from Entries where id = '" . $key . "'";
 
-				$stmt = $connection->prepare($sql);
-				$stmt->execute();
-			}
-		}
+		// 		$stmt = $connection->prepare($sql);
+		// 		$stmt->execute();
+		// 	}
+		// }
 	}
 	else {
 		if ($_GET['view'] == 'all') {
