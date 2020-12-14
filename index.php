@@ -107,7 +107,7 @@
 			$arr = array();
 
 			while ($row = mysqli_fetch_array($data)) {
-				echo $row['variant'] . '_' . $row['shopify_customer_id'] . '_' . $row['id'] . "\n";
+				echo $row['variant'] . '_' . $row['shopify_customer_id'] . '_' . $row['id'] . '_' . $row['shopify_order_id'] . "\n";
 			}
 
 		}
