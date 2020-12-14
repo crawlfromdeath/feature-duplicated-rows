@@ -28,7 +28,7 @@
 			$arr = array('status' => 200, 'message' => 'Done');
 			echo json_encode($arr);
 		}
-		else {
+		else { 
 			header('Content-Type: application/json');
 			header('Access-Control-Allow-Origin: https://releases.feature.com');
 			header('Access-Control-Allow-Methods: GET');
